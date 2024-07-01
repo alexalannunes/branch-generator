@@ -1,10 +1,12 @@
 import { ChakraProvider, extendTheme } from "@chakra-ui/react";
 import { ReactNode } from "react";
 import { BrowserRouter } from "react-router-dom";
+import "@fontsource/roboto";
 
 const theme = extendTheme({
   fonts: {
-    body: `'Open Sans', sans-serif`,
+    body: `'Roboto', sans-serif`,
+    heading: `'Roboto', sans-serif`,
   },
 });
 

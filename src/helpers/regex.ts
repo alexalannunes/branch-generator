@@ -1,0 +1,20 @@
+export const REGEX_HELPER = {
+  ALL_NON_DOT_DIGITS: /[^0-9.-]+/g,
+  ALL_NON_NUMBERS: /\D+/g,
+  ANY_EACH_UPPERCASE_LETTER: /([A-Z])/g,
+  NUMBER_WITH_PX_SUFFIX: /(-?\d+)px/,
+  ONLY_ALLOWED_CHARACTERS: /^[A-Za-z0-9/;&\-_ ]+$/,
+  ONLY_ALPHANUMERIC_AND_SPECIAL_CHARS: /^[A-Za-z0-9/\-_@!#$% ]+$/,
+  ONLY_POSITIVE_DECIMAL: /^\d+(\.\d{0,2})?$/,
+  ONLY_POSITIVE_INTEGER_NUMBERS: /^\d+$/,
+  ONLY_POSITIVE_INTEGER_NUMBERS_WITHOUT_LEADING_ZERO: /^[1-9]\d*$/,
+  ONLY_POSITIVE_WITH_TWO_LEADING_ZEROS:
+    /^[+]?([0-9]+(?:[.][0-9]{0,2})?|\.[0-9]{0,2})$/,
+  ONLY_POSITIVE_WITH_LEADING_ZEROS: /^[+]?([0-9]+(?:[.][0-9]+)?|\.[0-9]+)$/,
+  ONLY_UNALLOWED_CHARACTERS: /[^A-Za-z0-9/;&\-_ ]/g,
+  POSITIVE_NEGATIVE_INTEGER_NUMBERS: /^-?\d{0,}$/,
+  REMOVE_EXTRA_SPACES: /\s+/g,
+  STRING_AFTER_LAST_COMMA: /,\s([^,]+)$/,
+  NON_KEBAB_CASE: /[^A-Za-z0-9-]/g,
+  NON_ALPHANUMERIC_UNDERSCORE: /[^A-Za-z0-9_ ]/g,
+};
