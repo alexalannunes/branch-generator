@@ -18,6 +18,7 @@ export function HomePage() {
           />
         </Flex>
       </Box>
+      {/* Custom forms can appears here */}
       <DefaultForm />
     </Flex>
   );

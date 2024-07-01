@@ -21,7 +21,7 @@ export function DefaultForm() {
         <Input
           {...register("branch")}
           w="full"
-          placeholder="Branch name here"
+          placeholder="Past or write your Branch name here"
         />
         <BranchNameResult branch={branch} />
       </Stack>
