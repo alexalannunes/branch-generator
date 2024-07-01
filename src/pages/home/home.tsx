@@ -1,15 +1,5 @@
-import {
-  Box,
-  Flex,
-  Heading,
-  IconButton,
-  Input,
-  Stack,
-  Text,
-  Tooltip,
-} from "@chakra-ui/react";
+import { Box, Flex, Heading, IconButton } from "@chakra-ui/react";
 import { IoSettingsOutline } from "react-icons/io5";
-import { MdContentCopy } from "react-icons/md";
 import { DefaultForm } from "./ui/default-form";
 
 export function HomePage() {
