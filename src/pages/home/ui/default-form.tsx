@@ -1,7 +1,6 @@
 import { Flex, Input, Stack } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
 import { BranchNameResult } from "../../../components";
-
 interface DefaultFormValues {
   branch: string;
 }

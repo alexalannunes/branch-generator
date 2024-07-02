@@ -14,10 +14,10 @@ export const toSlug = (value: string, separator = "-") => {
   const trimmed = lowercased.trim().replace(/[\s\t\n]+/gm, " ");
 
   // Replace slashes with underscores to avoid collision
-  const withoutSlashes = trimmed.replace(/\//, "_");
+  // const withoutSlashes = trimmed.replace(/\//, "_");
 
   // Remove non-alphanumeric characters and underscores
-  const alphanumericOnly = withoutSlashes.replace(
+  const alphanumericOnly = trimmed.replace(
     REGEX_HELPER.NON_ALPHANUMERIC_UNDERSCORE,
     ""
   );

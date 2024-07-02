@@ -6,12 +6,16 @@ import { toSlug } from "../../helpers/to-slug";
 
 interface BranchNameResultProps {
   branch: string;
+  enableSlug?: boolean;
 }
 
-export function BranchNameResult({ branch }: BranchNameResultProps) {
+export function BranchNameResult({
+  branch,
+  enableSlug = true,
+}: BranchNameResultProps) {
   const [copied, setFlag] = useBoolean(false);
 
-  const result = branch ? toSlug(branch) : ":)";
+  const result = branch ? (enableSlug ? toSlug(branch) : branch) : ":)";
 
   const handleClipboardCopy = () => {
     setFlag.on();
@@ -38,32 +42,32 @@ export function BranchNameResult({ branch }: BranchNameResultProps) {
 
   return (
     <Box
+      bg="gray.100"
       p={6}
+      position={"relative"}
       pr={20}
       rounded={"md"}
-      bg="gray.100"
       w={"full"}
-      position={"relative"}
     >
       <Text fontFamily={"monospace"} fontSize={"1rem"}>
         {result}
       </Text>
       <Tooltip label={copyButtonTooltip}>
         <IconButton
-          icon={copyButtonIcon}
-          aria-label="Copy"
-          rounded={"full"}
-          position={"absolute"}
-          shadow={"md"}
-          bg={copyButtonBackground}
+          _active={{ scale: 0.9 }}
           _hover={{ bg: copyButtonBackground }}
+          aria-label="Copy"
+          bg={copyButtonBackground}
           color={copyButtonColor}
+          icon={copyButtonIcon}
+          onClick={handleClipboardCopy}
+          position={"absolute"}
           right={6}
+          rounded={"full"}
+          shadow={"md"}
           top={"50%"}
           transform={"auto"}
           translateY={"-50%"}
-          onClick={handleClipboardCopy}
-          _active={{ scale: 0.9 }}
         />
       </Tooltip>
     </Box>

@@ -1,25 +1,77 @@
-import { Box, Flex, Heading, IconButton } from "@chakra-ui/react";
-import { IoSettingsOutline } from "react-icons/io5";
+import { Flex, FormControl, Input, Stack } from "@chakra-ui/react";
+import { useForm, useWatch } from "react-hook-form";
+import { useReadLocalStorage } from "usehooks-ts";
+import { BranchNameResult } from "../../components";
+import { FormFieldValues } from "../forms/forms";
 import { DefaultForm } from "./ui/default-form";
 
-export function HomePage() {
+function CustomForm() {
+  // Add a fallback is no values found
+  // Guarded by page bellow
+  const initialStoredFields = {
+    result: "",
+    fields: [],
+  };
+
+  // move to hook
+  const storedForm =
+    useReadLocalStorage<FormFieldValues>("my-form") || initialStoredFields;
+
+  const { register, control, getValues } = useForm<Record<string, string>>({
+    defaultValues: {},
+    mode: "onChange",
+  });
+
+  useWatch({ control });
+
+  const fields = getValues();
+
+  const hasValues = Object.entries(fields).some(([_, value]) => !!value);
+
+  const branchName = Object.keys(fields).reduce((acc, key) => {
+    acc = acc.replace(`{${key}}`, fields[key]);
+    return acc;
+  }, storedForm.result);
+
+  const result = hasValues ? branchName : "";
+
   return (
-    <Flex direction={"column"} minH={"100vh"}>
-      <Box h={12} shadow={"md"} px={10}>
-        <Flex justifyContent={"space-between"} alignItems={"center"} h="full">
-          <Heading fontFamily={"monospace"} fontSize={"1.2rem"}>
-            branch
-          </Heading>
-          <IconButton
-            aria-label="Settings"
-            variant={"ghost"}
-            rounded={"full"}
-            icon={<IoSettingsOutline color="black" />}
-          />
-        </Flex>
-      </Box>
-      {/* Custom forms can appears here */}
-      <DefaultForm />
+    <Flex flex={1} alignItems={"center"} justifyContent={"center"}>
+      <Stack w={"600px"} spacing={4}>
+        {storedForm.fields.map((field) => {
+          return (
+            <FormControl key={field.key}>
+              <Input placeholder={field.label} {...register(field.key)} />
+            </FormControl>
+          );
+        })}
+
+        <BranchNameResult enableSlug={false} branch={result} />
+      </Stack>
+    </Flex>
+  );
+}
+
+export function HomePage() {
+  // Guarded by page bellow
+  const initialStoredFields = {
+    result: "",
+    fields: [],
+  };
+
+  // move to hook
+  const storedForm =
+    useReadLocalStorage<FormFieldValues>("my-form") || initialStoredFields;
+
+  /* Custom forms can appears here
+    add tabs
+  */
+
+  // BranchNameResult can be placed here with composition (future)
+  // so it can receive a slugged branch name
+  return (
+    <Flex flex={1}>
+      {storedForm.fields.length ? <CustomForm /> : <DefaultForm />}
     </Flex>
   );
 }
