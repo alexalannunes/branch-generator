@@ -69,6 +69,8 @@ export function HomePage() {
 
   // BranchNameResult can be placed here with composition (future)
   // so it can receive a slugged branch name
+
+  // Great feature: use IA to generate branch without many fields
   return (
     <Flex flex={1}>
       {storedForm.fields.length ? <CustomForm /> : <DefaultForm />}
