@@ -29,6 +29,7 @@ import { MdKeyboardBackspace } from "react-icons/md";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useLocalStorage } from "usehooks-ts";
 import { toSlug } from "../../helpers/to-slug";
+import { useFormPrefs } from "../../hooks/use-my-prefs";
 
 interface FormField {
   fieldId?: string;
@@ -63,6 +64,8 @@ export function FormsPage() {
     name: "fields",
   });
 
+  const { storeFormViewPref } = useFormPrefs();
+
   const { isOpen, onOpen, onClose } = useDisclosure();
   const cancelRef = useRef<HTMLButtonElement>(null);
 
@@ -90,6 +93,7 @@ export function FormsPage() {
     unregister("result");
     setValue("result", "");
     setValue("fields", []);
+    storeFormViewPref("default");
     onClose();
   };
 
