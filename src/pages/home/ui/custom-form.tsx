@@ -29,6 +29,7 @@ export function CustomForm() {
   }, storedForm.result);
 
   // bug: one field has no slug
+  // TODO: create a issue for this
   const result = hasValues ? branchName : "";
 
   const inputBg = useColorModeValue("white", "gray.900");
