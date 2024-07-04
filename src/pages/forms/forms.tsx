@@ -19,6 +19,7 @@ import {
   Stack,
   Textarea,
   Tooltip,
+  useColorModeValue,
   useDisclosure,
 } from "@chakra-ui/react";
 import { useRef } from "react";
@@ -97,6 +98,8 @@ export function FormsPage() {
     onClose();
   };
 
+  const inputBg = useColorModeValue("white", "gray.800");
+
   return (
     <Container maxW={"container.lg"}>
       <Flex my={10} justifyContent={"space-between"} alignItems={"center"}>
@@ -146,14 +149,14 @@ export function FormsPage() {
             {fields.map((fieldItem, index, arr) => {
               return (
                 <Box
-                  key={fieldItem.id}
-                  gap={4}
-                  bg="gray.50"
-                  p={6}
-                  rounded={"md"}
+                  bg={"container.background"}
                   border={"1px"}
-                  borderColor={"gray.200"}
+                  borderColor={"container.border"}
+                  gap={4}
+                  key={fieldItem.id}
+                  p={6}
                   position={"relative"}
+                  rounded={"md"}
                 >
                   <HStack
                     className="field-actions"
@@ -167,7 +170,6 @@ export function FormsPage() {
                       <Tooltip label="Move to down">
                         <IconButton
                           aria-label="Swap field"
-                          bg="white"
                           icon={<IoMdArrowDown />}
                           shadow={"md"}
                           type="button"
@@ -186,7 +188,6 @@ export function FormsPage() {
                       <Tooltip label="Move to up">
                         <IconButton
                           aria-label="Swap field"
-                          bg="white"
                           isDisabled={!arr[index - 1]}
                           icon={<IoMdArrowUp />}
                           shadow={"md"}
@@ -194,6 +195,7 @@ export function FormsPage() {
                           size={"xs"}
                           onClick={() => {
                             move(index, index - 1);
+                            // TODO: https://github.com/alexalannunes/branch-generator/issues/5
                             const result = getValues("fields")
                               .map((f) => `{${f.key}}`)
                               .join("-"); // Custom separator in textarea
@@ -205,10 +207,11 @@ export function FormsPage() {
 
                     <IconButton
                       aria-label="Remove field"
-                      bg="white"
                       icon={<LuTrash />}
                       shadow={"md"}
                       size={"xs"}
+                      colorScheme="red"
+                      variant="outline"
                       onClick={() => {
                         remove(index);
                         const result = getValues("fields")
@@ -227,7 +230,7 @@ export function FormsPage() {
                         return (
                           <Input
                             autoComplete="off"
-                            bg={"white"}
+                            bg={inputBg}
                             {...field}
                             onChange={(e) => {
                               const fieldName = toSlug(e.target.value);
@@ -249,11 +252,10 @@ export function FormsPage() {
 
             <Button
               gap={4}
-              bg="gray.50"
               p={4}
               rounded={"md"}
               border={"2px"}
-              borderColor={"gray.200"}
+              borderColor={"container.border"}
               flex={1}
               borderStyle={"dashed"}
               alignItems={"center"}
@@ -272,7 +274,7 @@ export function FormsPage() {
         <Flex flex={1}>
           <Box
             gap={4}
-            bg="gray.50"
+            bg="container.background"
             p={6}
             rounded={"md"}
             border={"1px"}
@@ -282,8 +284,8 @@ export function FormsPage() {
             <FormControl>
               <FormLabel>Setup branch name format</FormLabel>
               <Textarea
-                bg={"white"}
                 fontFamily={"monospace"}
+                bg={inputBg}
                 isDisabled={!fields.length}
                 {...register("result")}
               />
