@@ -278,7 +278,7 @@ export function FormsPage() {
             p={6}
             rounded={"md"}
             border={"1px"}
-            borderColor={"gray.200"}
+            borderColor={"container.border"}
             w={"full"}
           >
             <FormControl>
