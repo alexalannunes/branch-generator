@@ -1,4 +1,11 @@
-import { Box, IconButton, Text, Tooltip, useBoolean } from "@chakra-ui/react";
+import {
+  Box,
+  IconButton,
+  Text,
+  Tooltip,
+  useBoolean,
+  useColorModeValue,
+} from "@chakra-ui/react";
 import { useEffect } from "react";
 import { MdContentCopy, MdOutlineCheck } from "react-icons/md";
 import { copyToClipboard } from "../../helpers/to-clipboard";
@@ -35,14 +42,17 @@ export function BranchNameResult({
     };
   }, [copied]);
 
+  const successButtonBackground = useColorModeValue("green.500", "green.200");
+  const successButtonColor = useColorModeValue("white", "green.900");
+
   const copyButtonIcon = copied ? <MdOutlineCheck /> : <MdContentCopy />;
-  const copyButtonBackground = copied ? "green.400" : "white";
-  const copyButtonColor = copied ? "white" : "black";
+  const copyButtonBackground = copied ? successButtonBackground : "white";
+  const copyButtonColor = copied ? successButtonColor : "black";
   const copyButtonTooltip = copied ? "Copied" : "Copy to clipboard";
 
   return (
     <Box
-      bg="gray.100"
+      bg={"container.background"}
       p={6}
       position={"relative"}
       pr={20}

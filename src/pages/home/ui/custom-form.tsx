@@ -1,4 +1,10 @@
-import { Flex, FormControl, Input, Stack } from "@chakra-ui/react";
+import {
+  Flex,
+  FormControl,
+  Input,
+  Stack,
+  useColorModeValue,
+} from "@chakra-ui/react";
 import { useForm, useWatch } from "react-hook-form";
 import { useReadMyForm } from "../../../hooks/use-read-my-form";
 import { BranchNameResult } from "../../../components";
@@ -23,7 +29,10 @@ export function CustomForm() {
   }, storedForm.result);
 
   // bug: one field has no slug
+  // TODO: create a issue for this
   const result = hasValues ? branchName : "";
+
+  const inputBg = useColorModeValue("white", "gray.900");
 
   return (
     <Flex mt={20} alignItems={"center"} justifyContent={"center"}>
@@ -31,7 +40,11 @@ export function CustomForm() {
         {storedForm.fields.map((field) => {
           return (
             <FormControl key={field.key}>
-              <Input placeholder={field.label} {...register(field.key)} />
+              <Input
+                bg={inputBg}
+                placeholder={field.label}
+                {...register(field.key)}
+              />
             </FormControl>
           );
         })}

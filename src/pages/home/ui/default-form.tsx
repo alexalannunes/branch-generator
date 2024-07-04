@@ -1,4 +1,10 @@
-import { Flex, FlexProps, Input, Stack } from "@chakra-ui/react";
+import {
+  Flex,
+  FlexProps,
+  Input,
+  Stack,
+  useColorModeValue,
+} from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
 import { BranchNameResult } from "../../../components";
 import { useReadMyForm } from "../../../hooks/use-read-my-form";
@@ -23,6 +29,8 @@ export function DefaultForm() {
 
   const branch = watch("branch");
 
+  const inputBg = useColorModeValue("white", "gray.900");
+
   return (
     <Flex {...containerProps} alignItems={"center"} justifyContent={"center"}>
       <Stack w={"600px"} alignItems={"center"} spacing={4}>
@@ -30,6 +38,7 @@ export function DefaultForm() {
           {...register("branch")}
           w="full"
           placeholder="Past or write your Branch name here"
+          bg={inputBg}
         />
         <BranchNameResult branch={branch} />
       </Stack>
