@@ -6,8 +6,8 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
-import { BranchNameResult } from "../../../components";
-import { useReadMyForm } from "../../../hooks/use-read-my-form";
+import { BranchNameResult } from "../../../../components";
+import { useReadMyForm } from "../../../../hooks/use-read-my-form";
 interface DefaultFormValues {
   branch: string;
 }

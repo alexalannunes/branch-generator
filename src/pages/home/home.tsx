@@ -3,8 +3,8 @@ import { useState } from "react";
 import { useFormPrefs } from "../../hooks/use-my-prefs";
 import { ButtonFormSwitcher } from "./ui/button-form-switcher";
 import { CustomForm } from "./ui/custom-form";
-import { DefaultForm } from "./ui/default-form";
 import { useReadMyForm } from "../../hooks/use-read-my-form";
+import { DefaultForm } from "./ui/default-form";
 
 // move to types file
 export type FormView = "default" | "custom";

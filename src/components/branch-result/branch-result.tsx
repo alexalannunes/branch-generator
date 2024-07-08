@@ -58,6 +58,7 @@ export function BranchNameResult({
       pr={20}
       rounded={"md"}
       w={"full"}
+      data-testid="branch-name-result"
     >
       <Text fontFamily={"monospace"} fontSize={"1rem"}>
         {result}
