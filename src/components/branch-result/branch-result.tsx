@@ -3,12 +3,10 @@ import {
   IconButton,
   Text,
   Tooltip,
-  useBoolean,
+  useClipboard,
   useColorModeValue,
 } from "@chakra-ui/react";
-import { useEffect } from "react";
 import { MdContentCopy, MdOutlineCheck } from "react-icons/md";
-import { copyToClipboard } from "../../helpers/to-clipboard";
 import { toSlug } from "../../helpers/to-slug";
 
 interface BranchNameResultProps {
@@ -20,35 +18,21 @@ export function BranchNameResult({
   branch,
   enableSlug = true,
 }: BranchNameResultProps) {
-  const [copied, setFlag] = useBoolean(false);
-
   const result = branch ? (enableSlug ? toSlug(branch) : branch) : ":)";
 
+  const { hasCopied, onCopy } = useClipboard(result, 1200);
+
   const handleClipboardCopy = () => {
-    setFlag.on();
-    copyToClipboard(result);
+    onCopy();
   };
-
-  useEffect(() => {
-    let timeoutId: ReturnType<typeof setTimeout>;
-    if (copied) {
-      timeoutId = setTimeout(() => {
-        setFlag.off();
-      }, 1200);
-    }
-
-    return () => {
-      if (timeoutId !== undefined) clearTimeout(timeoutId);
-    };
-  }, [copied]);
 
   const successButtonBackground = useColorModeValue("green.500", "green.200");
   const successButtonColor = useColorModeValue("white", "green.900");
 
-  const copyButtonIcon = copied ? <MdOutlineCheck /> : <MdContentCopy />;
-  const copyButtonBackground = copied ? successButtonBackground : "white";
-  const copyButtonColor = copied ? successButtonColor : "black";
-  const copyButtonTooltip = copied ? "Copied" : "Copy to clipboard";
+  const copyButtonIcon = hasCopied ? <MdOutlineCheck /> : <MdContentCopy />;
+  const copyButtonBackground = hasCopied ? successButtonBackground : "white";
+  const copyButtonColor = hasCopied ? successButtonColor : "black";
+  const copyButtonTooltip = hasCopied ? "Copied" : "Copy to clipboard";
 
   return (
     <Box
