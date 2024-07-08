@@ -7,6 +7,8 @@ import {
   AlertDialogOverlay,
   Box,
   Button,
+  Card,
+  CardBody,
   Container,
   Divider,
   Flex,
@@ -148,105 +150,106 @@ export function FormsPage() {
           <Stack>
             {fields.map((fieldItem, index, arr) => {
               return (
-                <Box
-                  bg={"container.background"}
+                <Card
+                  shadow={"none"}
                   border={"1px"}
                   borderColor={"container.border"}
-                  gap={4}
                   key={fieldItem.id}
                   p={6}
                   position={"relative"}
                   rounded={"md"}
                 >
-                  <HStack
-                    className="field-actions"
-                    position={"absolute"}
-                    right={4}
-                    top={1}
-                    zIndex={1}
-                  >
-                    {/* convert to button group */}
-                    {!arr[index - 1] ? (
-                      <Tooltip label="Move to down">
-                        <IconButton
-                          aria-label="Swap field"
-                          icon={<IoMdArrowDown />}
-                          shadow={"md"}
-                          type="button"
-                          isDisabled={arr.length === 1}
-                          size={"xs"}
-                          onClick={() => {
-                            move(index, index + 1);
-                            const result = getValues("fields")
-                              .map((f) => `{${f.key}}`)
-                              .join("-"); // Custom separator in textarea
-                            setValue("result", result);
-                          }}
-                        />
-                      </Tooltip>
-                    ) : (
-                      <Tooltip label="Move to up">
-                        <IconButton
-                          aria-label="Swap field"
-                          isDisabled={!arr[index - 1]}
-                          icon={<IoMdArrowUp />}
-                          shadow={"md"}
-                          type="button"
-                          size={"xs"}
-                          onClick={() => {
-                            move(index, index - 1);
-                            // TODO: https://github.com/alexalannunes/branch-generator/issues/5
-                            const result = getValues("fields")
-                              .map((f) => `{${f.key}}`)
-                              .join("-"); // Custom separator in textarea
-                            setValue("result", result);
-                          }}
-                        />
-                      </Tooltip>
-                    )}
-
-                    <IconButton
-                      aria-label="Remove field"
-                      icon={<LuTrash />}
-                      shadow={"md"}
-                      size={"xs"}
-                      colorScheme="red"
-                      variant="outline"
-                      onClick={() => {
-                        remove(index);
-                        const result = getValues("fields")
-                          .map((f) => `{${f.key}}`)
-                          .join("-"); // Custom separator in textarea
-                        setValue("result", result);
-                      }}
-                    />
-                  </HStack>
-                  <FormControl>
-                    <FormLabel>Field name</FormLabel>
-                    <Controller
-                      name={`fields.${index}.label`}
-                      control={control}
-                      render={({ field }) => {
-                        return (
-                          <Input
-                            autoComplete="off"
-                            bg={inputBg}
-                            {...field}
-                            onChange={(e) => {
-                              const fieldName = toSlug(e.target.value);
-                              setValue(`fields.${index}.key`, fieldName);
+                  <CardBody>
+                    <HStack
+                      className="field-actions"
+                      position={"absolute"}
+                      right={4}
+                      top={1}
+                      zIndex={1}
+                    >
+                      {/* convert to button group */}
+                      {!arr[index - 1] ? (
+                        <Tooltip label="Move to down">
+                          <IconButton
+                            aria-label="Swap field"
+                            icon={<IoMdArrowDown />}
+                            shadow={"md"}
+                            type="button"
+                            isDisabled={arr.length === 1}
+                            size={"xs"}
+                            onClick={() => {
+                              move(index, index + 1);
                               const result = getValues("fields")
                                 .map((f) => `{${f.key}}`)
                                 .join("-"); // Custom separator in textarea
                               setValue("result", result);
-                              field.onChange(e.target.value);
                             }}
                           />
-                        );
-                      }}
-                    />
-                  </FormControl>
-                </Box>
+                        </Tooltip>
+                      ) : (
+                        <Tooltip label="Move to up">
+                          <IconButton
+                            aria-label="Swap field"
+                            isDisabled={!arr[index - 1]}
+                            icon={<IoMdArrowUp />}
+                            shadow={"md"}
+                            type="button"
+                            size={"xs"}
+                            onClick={() => {
+                              move(index, index - 1);
+                              // TODO: https://github.com/alexalannunes/branch-generator/issues/5
+                              const result = getValues("fields")
+                                .map((f) => `{${f.key}}`)
+                                .join("-"); // Custom separator in textarea
+                              setValue("result", result);
+                            }}
+                          />
+                        </Tooltip>
+                      )}
+
+                      <IconButton
+                        aria-label="Remove field"
+                        icon={<LuTrash />}
+                        shadow={"md"}
+                        size={"xs"}
+                        colorScheme="red"
+                        variant="outline"
+                        onClick={() => {
+                          remove(index);
+                          const result = getValues("fields")
+                            .map((f) => `{${f.key}}`)
+                            .join("-"); // Custom separator in textarea
+                          setValue("result", result);
+                        }}
+                      />
+                    </HStack>
+                    <FormControl>
+                      <FormLabel>Field name</FormLabel>
+                      <Controller
+                        name={`fields.${index}.label`}
+                        control={control}
+                        render={({ field }) => {
+                          return (
+                            <Input
+                              autoComplete="off"
+                              bg={inputBg}
+                              {...field}
+                              onChange={(e) => {
+                                const fieldName = toSlug(e.target.value);
+                                setValue(`fields.${index}.key`, fieldName);
+                                const result = getValues("fields")
+                                  .map((f) => `{${f.key}}`)
+                                  .join("-"); // Custom separator in textarea
+                                setValue("result", result);
+                                field.onChange(e.target.value);
+                              }}
+                            />
+                          );
+                        }}
+                      />
+                    </FormControl>
+                  </CardBody>
+                </Card>
               );
             })}
 
@@ -272,25 +275,26 @@ export function FormsPage() {
           </Stack>
         </Box>
         <Flex flex={1}>
-          <Box
-            gap={4}
-            bg="container.background"
+          <Card
             p={6}
             rounded={"md"}
             border={"1px"}
             borderColor={"container.border"}
             w={"full"}
+            shadow={"none"}
           >
-            <FormControl>
-              <FormLabel>Setup branch name format</FormLabel>
-              <Textarea
-                fontFamily={"monospace"}
-                bg={inputBg}
-                isDisabled={!fields.length}
-                {...register("result")}
-              />
-            </FormControl>
-          </Box>
+            <CardBody>
+              <FormControl>
+                <FormLabel>Setup branch name format</FormLabel>
+                <Textarea
+                  fontFamily={"monospace"}
+                  bg={inputBg}
+                  isDisabled={!fields.length}
+                  {...register("result")}
+                />
+              </FormControl>
+            </CardBody>
+          </Card>
         </Flex>
       </Flex>
 
