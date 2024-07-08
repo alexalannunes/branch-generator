@@ -1,7 +1,8 @@
 import { fireEvent, render, screen } from "@testing-library/react";
+import { describe, it, vi } from "vitest";
 import { BranchNameResult } from "..";
 
-const writeText = vitest.fn();
+const writeText = vi.fn();
 
 Object.assign(navigator, {
   clipboard: {
@@ -10,17 +11,17 @@ Object.assign(navigator, {
 });
 
 describe("BranchNameResult", () => {
-  test("render branch name", () => {
+  it("render branch name", () => {
     render(<BranchNameResult branch="bug report" />);
     expect(screen.getByText(/bug-report/i)).toBeInTheDocument();
   });
 
-  test("disabled slug", () => {
+  it("disabled slug", () => {
     render(<BranchNameResult enableSlug={false} branch="bug report" />);
     expect(screen.getByText(/bug report/i)).toBeInTheDocument();
   });
 
-  test("button can be enable", async () => {
+  it("button can be enable", async () => {
     render(<BranchNameResult branch="bug report" />);
     expect(screen.getByRole("button")).toBeEnabled();
 
