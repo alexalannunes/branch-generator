@@ -31,6 +31,7 @@ import { LuTrash } from "react-icons/lu";
 import { MdKeyboardBackspace } from "react-icons/md";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useLocalStorage } from "usehooks-ts";
+import { isEqual } from "lodash";
 import { toSlug } from "../../helpers/to-slug";
 import { useFormPrefs } from "../../hooks/use-my-prefs";
 
@@ -100,7 +101,28 @@ export function FormsPage() {
     onClose();
   };
 
+  const handleOrderFieldsWhenMove = () => {
+    const result = getValues("fields")
+      .map((f) => `{${f.key}}`)
+      .join("-"); // Custom separator in textarea
+    setValue("result", result);
+  };
+
+  const handleMoveDown = (index: number) => {
+    move(index, index + 1);
+    handleOrderFieldsWhenMove();
+  };
+
+  const handleMoveUp = (index: number) => {
+    move(index, index - 1);
+    handleOrderFieldsWhenMove();
+  };
+
   const inputBg = useColorModeValue("white", "gray.800");
+
+  const values = getValues();
+
+  const hasFormChanges = !isEqual(storedForm, values);
 
   return (
     <Container maxW={"container.lg"}>
@@ -120,6 +142,7 @@ export function FormsPage() {
             form="setup-form"
             type="submit"
             colorScheme="teal"
+            isDisabled={!hasFormChanges}
           >
             Save
           </Button>
@@ -178,11 +201,7 @@ export function FormsPage() {
                             isDisabled={arr.length === 1}
                             size={"xs"}
                             onClick={() => {
-                              move(index, index + 1);
-                              const result = getValues("fields")
-                                .map((f) => `{${f.key}}`)
-                                .join("-"); // Custom separator in textarea
-                              setValue("result", result);
+                              handleMoveDown(index);
                             }}
                           />
                         </Tooltip>
@@ -196,12 +215,7 @@ export function FormsPage() {
                             type="button"
                             size={"xs"}
                             onClick={() => {
-                              move(index, index - 1);
-                              // TODO: https://github.com/alexalannunes/branch-generator/issues/5
-                              const result = getValues("fields")
-                                .map((f) => `{${f.key}}`)
-                                .join("-"); // Custom separator in textarea
-                              setValue("result", result);
+                              handleMoveUp(index);
                             }}
                           />
                         </Tooltip>
@@ -216,10 +230,7 @@ export function FormsPage() {
                         variant="outline"
                         onClick={() => {
                           remove(index);
-                          const result = getValues("fields")
-                            .map((f) => `{${f.key}}`)
-                            .join("-"); // Custom separator in textarea
-                          setValue("result", result);
+                          handleOrderFieldsWhenMove();
                         }}
                       />
                     </HStack>
@@ -237,10 +248,7 @@ export function FormsPage() {
                               onChange={(e) => {
                                 const fieldName = toSlug(e.target.value);
                                 setValue(`fields.${index}.key`, fieldName);
-                                const result = getValues("fields")
-                                  .map((f) => `{${f.key}}`)
-                                  .join("-"); // Custom separator in textarea
-                                setValue("result", result);
+                                handleOrderFieldsWhenMove();
                                 field.onChange(e.target.value);
                               }}
                             />
