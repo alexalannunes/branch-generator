@@ -20,7 +20,9 @@ export function BranchNameResult({
 }: BranchNameResultProps) {
   const result = branch ? (enableSlug ? toSlug(branch) : branch) : ":)";
 
-  const { hasCopied, onCopy } = useClipboard(result, 1200);
+  const copyText = `git checkout -b ${result}`;
+
+  const { hasCopied, onCopy } = useClipboard(copyText, 1200);
 
   const handleClipboardCopy = () => {
     onCopy();
