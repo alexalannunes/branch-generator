@@ -28,8 +28,6 @@ export function CustomForm() {
     return acc;
   }, storedForm.result);
 
-  // bug: one field has no slug
-  // TODO: create a issue for this
   const result = hasValues ? branchName : "";
 
   const inputBg = useColorModeValue("white", "gray.900");
@@ -44,6 +42,9 @@ export function CustomForm() {
                 bg={inputBg}
                 placeholder={field.label}
                 {...register(field.key)}
+                onKeyDown={(e) => {
+                  if (e.code === "Space") e.preventDefault();
+                }}
               />
             </FormControl>
           );
